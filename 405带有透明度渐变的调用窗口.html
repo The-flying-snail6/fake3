@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>405带有透明度渐变的调用窗口</title>
+
+<style>
+	*{margin:0;padding:0;}
+	#tab{border:1px solid #eee;width:800px;height:460px;margin:100px;}
+	#tab ul{list-style:none;}
+	#tab ul li{float:left;width:200px;height:60px;background-color:#090; text-align:center; line-height:60px; font-size:20px; color: #C00;}
+	.clear{height:0;clear:both;}
+	#content{display:block;height:400px;text-align:center; line-height:400px; font-size:36px;}
+	#content>div{height:400px;display:none;}
+	#tab>div{height:400px;}
+	
+	#tab ul .active_tit{background-color:#FF3;}
+	#tab .active_content{display:block;background-color:#FF3; }
+</style>
+
+
+<script>
+	window.onload = function(){
+		var aLi=document.getElementById('tit').getElementsByTagName('li');
+		var aDiv=document.getElementById('content').getElementsByTagName('div');
+		var long=aLi.length;
+		var i=0;
+		
+		
+			 
+		
+		for(i;i<long;i++){
+			aLi[i].index = i//取出当前i值
+			
+			aLi[i].onmouseover=function(){
+				for(var j=0;j<long;j++){
+					aLi[j].className='';
+					aDiv[j].className='';
+					aDiv[j].style.opacity = 0;
+				}
+				aLi[this.index].className = "active_tit";
+				aDiv[this.index].className = 'active_content';
+				show(this.index);
+			}
+		 }
+			
+		
+		/*for(var j=0;j<aLi.length;j++){
+			aLi[j].className='';
+			aDiv[j].className='';	
+		}*/
+		function show(a){
+			var index = a;
+			var alpha = 0;
+			clearInterval(timer);
+			var timer = setInterval(function(){
+				alpha +=2;
+				(alpha>100) && (alpha=100);
+				aDiv[index].style.opacity = alpha/100;	
+				alpha==100 && clearInterval(timer);
+			},20)		
+		
+		}
+		
+	}
+
+</script>
+
+</head>
+
+<body>
+
+<div id="tab">
+	<ul id="tit">
+		<li class="active_tit">毛泽东</li>
+		<li>邓小平</li>
+		<li>周恩来</li>
+		<li>朱德</li>
+        <div class="clear"></div>
+	</ul>
+    
+    <div id="content">
+        <div class="active_content">国家主席</div>
+        <div>国家政治局委员</div>
+        <div>国务院总理</div>
+        <div>人民解放军总司令</div>
+    </div>
+</div>
+
+</body>
+</html>
